@@ -64,7 +64,7 @@ Building a stable real-time game requires handling edge cases that don't exist i
 1. Clone the repository:
    ```bash
    git clone https://github.com/JedrasiakJan/Tic-Tac-Toe.git
-   cd your-repo-name
+   cd Tic-Tac-Toe
    ```
 2. Start the application using Docker Compose:
    ```bash
