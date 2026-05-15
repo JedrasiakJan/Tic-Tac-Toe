@@ -1,0 +1,159 @@
+/* Definiujemy nasze gamingowe kolory */
+:root {
+    --bg-color: #0b0c10;
+    --container-bg: #1f2833;
+    --neon-x: #ff0055;
+    --neon-o: #00e5ff;
+    --text-main: #c5c6c7;
+    --cell-bg: #12151c;
+    --border-color: #45a29e;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif; /* Gamingowa czcionka */
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    /* Delikatne tło w kropki dla klimatu */
+    background-image: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%);
+}
+
+.container {
+    background-color: rgba(31, 40, 51, 0.8);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(69, 162, 158, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 450px; /* Nie będzie za szerokie na PC */
+    border: 1px solid rgba(69, 162, 158, 0.3);
+}
+
+h1 {
+    margin-top: 0;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+}
+
+.role-badge {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    min-height: 25px;
+}
+
+.status {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: var(--text-main);
+    min-height: 25px;
+}
+
+/* Responsywna siatka, zawsze dopasuje się do szerokości */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 0 auto;
+}
+
+.cell {
+    background-color: var(--cell-bg);
+    border-radius: 12px;
+    border: 2px solid #2a2f3a;
+    aspect-ratio: 1; /* Utrzymuje komórki jako idealne kwadraty */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(3rem, 10vw, 5rem); /* Zmniejsza czcionkę na małych tel. */
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.cell:hover {
+    border-color: var(--border-color);
+    box-shadow: inset 0 0 15px rgba(69, 162, 158, 0.3);
+}
+
+.cell:active {
+    transform: scale(0.95);
+}
+
+/* Magia Neonów dla znaków */
+.cell.X, .role-badge.X {
+    color: var(--neon-x);
+    text-shadow: 0 0 10px var(--neon-x), 0 0 20px var(--neon-x);
+}
+
+.cell.O, .role-badge.O {
+    color: var(--neon-o);
+    text-shadow: 0 0 10px var(--neon-o), 0 0 20px var(--neon-o);
+}
+
+.error {
+    color: #ff4646;
+    font-weight: bold;
+    margin-top: 20px;
+    min-height: 20px;
+    text-shadow: 0 0 8px rgba(255, 70, 70, 0.5);
+}
+
+/* Ulepszenia tylko dla małych telefonów */
+@media (max-width: 400px) {
+    .container {
+        padding: 20px;
+    }
+    .board {
+        gap: 8px;
+    }
+}
+
+/* --- ANIMACJA WYGRANEJ --- */
+@keyframes win-pulse {
+    0% { transform: scale(1); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+    50% { transform: scale(1.08); box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.4); border-color: white; z-index: 10; background-color: #1a202c; }
+    100% { transform: scale(1); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+}
+
+.winning-cell {
+    animation: win-pulse 1s ease-in-out infinite;
+    /* Dodatkowe przyciemnienie pozostałych komórek zrobimy w JS, 
+       żeby wygrywająca linia jeszcze bardziej świeciła! */
+}
+
+/* Klasa do przygaszenia przegranych pól */
+.dimmed {
+    opacity: 0.3;
+    filter: grayscale(80%);
+}
+
+#restart-btn {
+    background-color: transparent;
+    color: #00ffcc; /* Neonowy cyjan */
+    border: 2px solid #00ffcc;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif; /* Ten sam font co tytuł */
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+    margin: 20px auto;
+    display: none; /* Ukryte domyślnie przez JS */
+}
+
+#restart-btn:hover {
+    background-color: #00ffcc;
+    color: #1a1a2e; /* Ciemne tło liter */
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.6), 0 0 40px rgba(0, 255, 204, 0.4);
+    transform: scale(1.05); /* Lekkie powiększenie */
+}
