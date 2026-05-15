@@ -59,6 +59,16 @@ Building a stable real-time game requires handling edge cases that don't exist i
 **Problem:** While refactoring the payload structure from raw strings (`"4"`) to JSON (`{"index": 4}`), cached mobile browsers continued sending old string formats, crashing the Pydantic parser with `JSONDecodeError`.
 **Solution:** Instead of forcing `websocket.receive_json()`, the server deliberately uses `websocket.receive_text()`. It then attempts to manually parse the JSON. If it catches a bare string (due to a cached client), it gracefully repackages it into a dictionary (`{"index": int(raw_data)}`) before handing it off to Pydantic for final validation.
 
+## 🎮 Preview
+
+Give it a try and see how the real-time multiplayer gameplay works in action.  
+Open the game in two browser tabs or on your phone and laptop to test it yourself.
+
+<p align="center">
+  <img src="assets/prewiev_1.png" width="45%" alt="Tic-Tac-Toe Gameplay 1">
+  <img src="assets/prewiev_2.png" width="45%" alt="Tic-Tac-Toe Gameplay 2">
+</p>
+
 ## 💻 How to Run (Locally)
 
 1. Clone the repository:
